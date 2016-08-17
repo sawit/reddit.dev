@@ -22,9 +22,11 @@
 //  	return view('uppercase', $data);
 	
 // });
-Route::get('/', 'HomeController@showWelcome');
-Route::get('/uppercase/{word}', 'HomeController@uppercase');
-Route::get('/increment/{number}', 'HomeController@increment');
+// Route::get('/', 'HomeController@showWelcome');
+// Route::get('/uppercase/{word}', 'HomeController@uppercase');
+// Route::get('/increment/{number}', 'HomeController@increment');
+
+Route::resource('posts', 'PostsController');
 
 // Route::get('/increment/{number}', function($number) {
 // 		if(is_numeric($number)) {
