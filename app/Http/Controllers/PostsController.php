@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Post;
 
 class PostsController extends Controller
 {
@@ -16,7 +17,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return 'Hello Kings from the list of posts!';
+        $posts = Post::all();
+        dd($posts);
     }
 
     /**
@@ -26,7 +28,8 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return 'Hello Kings from the create function!';
+        return view('posts.create');
+
     }
 
     /**
