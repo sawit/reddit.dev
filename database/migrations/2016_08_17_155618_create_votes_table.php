@@ -12,12 +12,11 @@ class CreateVotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('contacts', function(Blueprint $votes)) {
+        Schema::create('votes', function(Blueprint $votes)) {
             $votes->increments('id');
-            $votes->string('title');
-            $votes->string('url')->nullable();
-            $votes->longText('content');
-            $votes->string('created_by');
+            $votes->foreign('user_id')->references('users')->unsigned();
+            $votes->foreign('post_id')->references('posts');
+            $votes->integer('vote');
             $votes->timestamps();
         }
         //
