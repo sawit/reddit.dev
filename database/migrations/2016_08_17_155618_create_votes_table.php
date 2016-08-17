@@ -12,6 +12,14 @@ class CreateVotesTable extends Migration
      */
     public function up()
     {
+        Schema::create('contacts', function(Blueprint $votes)) {
+            $votes->increments('id');
+            $votes->string('title');
+            $votes->string('url')->nullable();
+            $votes->longText('content');
+            $votes->string('created_by');
+            $votes->timestamps();
+        }
         //
     }
 
@@ -22,6 +30,6 @@ class CreateVotesTable extends Migration
      */
     public function down()
     {
-        //
+         Schema::drop('votes');
     }
 }
