@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Post;
+// use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class PostsController extends Controller
 {
@@ -40,7 +42,14 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        return 'Hello Kings from the store function!';    }
+        $post1 = new \App\Models\Post();
+        $post1->title = $request->input('title');
+        $post1->url = $request->input('url');
+        $post1->content = $request->input('content');
+        $post1->created_by = $request->input('created_by');
+        $post1->save();
+   
+    }
 
     /**
      * Display the specified resource.
@@ -50,7 +59,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        return 'Hello Kings from the show function!';
+        $post = Post::find($id);
+        $post;
     }
 
     /**
@@ -73,7 +83,9 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return 'Hello Kings from the update function!';
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->save();
     }
 
     /**
@@ -84,6 +96,7 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
+        // use SoftDeletes;
         return 'Hello Kings from the destroy function!';
     }
 }
