@@ -8,9 +8,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-  //  public function showWelcome() {
-  //  		return view('welcome');
-  //  }
+   		public function showWelcome() {
+   				return view('welcome');
+   		}
 
 	 // public function rollDice($guess) {
 	 // 	$roll = mt_rand(1,6);
