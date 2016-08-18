@@ -22,6 +22,9 @@ class HomeController extends Controller
         $number += 1;
         return view('increment')->with('number', $number);
     }
+    public function showWelcome($name = 'Emily') {
+        return redirect()->action('HomeController@uppercase', array('Emily'));
+    }
 
     public function index()
     {

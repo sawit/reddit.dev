@@ -42,12 +42,32 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $post1 = new \App\Models\Post();
-        $post1->title = $request->input('title');
-        $post1->url = $request->input('url');
-        $post1->content = $request->input('content');
-        $post1->created_by = $request->input('created_by');
-        $post1->save();
+        $rules = [
+            'title' => 'required|max:100',
+            'url' => 'required'
+        ];
+        $this->validate($request, $rules);
+
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->url = $request->url;
+        $post->content = $request->input('content');
+        $post->created_by = 1;
+        $post->save();
+
+        // return redirect()->action('PostsController@index');
+
+        // @if($errors->has('field')) 
+        //     {{!! $errors->first('field', '<span class="help-block">:message</span>');
+        //     !!}}
+        // @endif
+
+
+        // @include('partials.errors', ['field' => 'title']);
+        // @include('partials.errors', ['field' => 'url']);
+        // // @include('view-name', )
+        
+
    
     }
 
@@ -60,7 +80,7 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        $post;
+        return view('posts.show')->with('post', $post);
     }
 
     /**
