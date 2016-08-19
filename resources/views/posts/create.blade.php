@@ -24,10 +24,18 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
                         <input type="text" name="url" value="{{ old('url') }}" class="form-control" placeholder="URL">
+                        @if($errors->has('url')) 
+                            {{!! $errors->first('url', '<span class="help-block">:message</span>');
+                            !!}}
+                        @endif
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
                         <input type="text" name="title" value="{{ old('title') }}" class="form-control" placeholder="Title">
+                        @if($errors->has('title')) 
+                            {{!! $errors->first('title', '<span class="help-block">:message</span>');
+                            !!}}
+                        @endif
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12 controls">

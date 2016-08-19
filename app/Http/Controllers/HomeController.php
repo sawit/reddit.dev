@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+// use App\Model\Post;
 
 class HomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    /**     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,7 +23,9 @@ class HomeController extends Controller
         return view('increment')->with('number', $number);
     }
     public function showWelcome($name = 'Emily') {
-        return redirect()->action('HomeController@uppercase', array('Emily'));
+        return view('welcome')->with('name', $name);
+
+        // redirect()->action('HomeController@uppercase', array('Emily'));
     }
 
     public function index()

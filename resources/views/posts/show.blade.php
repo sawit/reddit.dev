@@ -7,5 +7,7 @@
 		<dd>{{ $post->url }}</dd>
 		<dt>Content</dt>
 		<dd>{{ $post->content }}</dd>
+		<dt>Posted</dt>
+		<dd>{{ $post->created_at }}</dd>
 	</dl>
 @stop
