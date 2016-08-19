@@ -8,7 +8,7 @@ use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
-// use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class PostsController extends Controller
@@ -41,31 +41,19 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public static function store(Request $request)
+    public function store(Request $request)
     {
-        $rules = [
-            'title' => 'required|max:100',
-            'url' => 'required'
-        ];
-        $this->validate($request, $rules);
-        return redirect()->action('PostsController@index');
+        // assigning messages to session
+        // $value = $request->session()->get('key');
+        // if ($request->session()->has('key')) {
+        //     $value = $request->session('key');
+        // } else {
+        //     $request->session()->put('key', 'value');
+        // }
 
         $post = new Post();
-        $post->title = $request->input('title');
-        $post->url = $request->url;
-        $post->content = $request->input('content');
         $post->created_by = 1;
-        $post->save();
-
-        $value = $request->session()->get('key');
-         
-        if ($request->session()->has('key')) {
-            $value = $request->session('key');
-        } else {
-            $request->session()->put('key', 'value');
-        }
-
-
+        return $this->validateAndSave($post, $request);
     }
 
     /**
@@ -106,8 +94,9 @@ class PostsController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::find($id);
-        $post->title = $request->input('title');
-        $post->save();
+        return $this->validateAndSave($post, $request);
+        // $post->title = $request->input('title');
+        // $post->save();
     }
 
     /**
@@ -129,5 +118,18 @@ class PostsController extends Controller
         }
         return redirect()->action('PostsController@index');
 
+    }
+    private function validateAndSave(Post $post, Request $request) {
+        $request->session()->flash('ERROR_MESSAGE', 'Post not created');
+        $this->validate($request, Post::$rules);
+        $request->session()->forget('ERROR_MESSAGE');
+ 
+        $post->title = $request->input('title');
+        $post->url = $request->url;
+        $post->content = $request->input('content');
+        $post->save();
+
+        $request->session()->flash('SUCCESS_MESSAGE', 'Post created');
+        return redirect()->action('PostsController@index');
     }
 }
