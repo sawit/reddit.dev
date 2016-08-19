@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $posts->integer('created_by')->unsigned();
             $posts->foreign('created_by')->references('id')->on('users');
             $posts->timestamps();
+            $posts->softDeletes();
         });
         //
     }
