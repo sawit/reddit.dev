@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 // use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -19,8 +20,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        dd($posts);
+        $posts = Post::paginate(5);
+        return view('posts.index')->with(array('posts' => $posts));
     }
 
     /**
@@ -40,13 +41,14 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public static function store(Request $request)
     {
         $rules = [
             'title' => 'required|max:100',
             'url' => 'required'
         ];
         $this->validate($request, $rules);
+        return redirect()->action('PostsController@index');
 
         $post = new Post();
         $post->title = $request->input('title');
@@ -55,20 +57,15 @@ class PostsController extends Controller
         $post->created_by = 1;
         $post->save();
 
-        // return redirect()->action('PostsController@index');
+        $value = $request->session()->get('key');
+         
+        if ($request->session()->has('key')) {
+            $value = $request->session('key');
+        } else {
+            $request->session()->put('key', 'value');
+        }
 
-        // @if($errors->has('field')) 
-        //     {{!! $errors->first('field', '<span class="help-block">:message</span>');
-        //     !!}}
-        // @endif
 
-
-        // @include('partials.errors', ['field' => 'title']);
-        // @include('partials.errors', ['field' => 'url']);
-        // // @include('view-name', )
-        
-
-   
     }
 
     /**
@@ -81,6 +78,11 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         return view('posts.show')->with('post', $post);
+
+        if(!$post) {
+            Log::info("Post with ID $id can't be found!");
+            abort(404);
+        }
     }
 
     /**
@@ -117,6 +119,15 @@ class PostsController extends Controller
     public function destroy($id)
     {
         // use SoftDeletes;
-        return 'Hello Kings from the destroy function!';
+        $post = Post::find($id);
+        if(!$post) {
+            session()->flash('message', 'Post was not found');
+        } else {
+            $post->delete();
+            session()->flash('message', 'Post deleted');
+            
+        }
+        return redirect()->action('PostsController@index');
+
     }
 }

@@ -1,45 +1,34 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
+@extends('layouts.master')
+        <head>
+            <title>Saw It</title>
+        </head>
+@section('content')
         <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
+            <form method="POST" action="/links/store">
+                    {!! csrf_field() !!}
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+                    <input type="text" name="title" value="{{ old('title') }}" class="form-control" placeholder="Title">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+                    <input type="text" name="url" value="{{ old('url') }}" class="form-control" placeholder="URL">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><span>
+                    <textarea name="content" value="{{ old('content') }}" class="form-control" placeholder="Enter content here"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 controls">
+                        <button type="submit" class="btn btn-primary pull-right">
+                            <i class="glyphicon glyphicon-share-alt"></i>
+                            Send
+                        </button>
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
     </body>
 </html>
+@stop
