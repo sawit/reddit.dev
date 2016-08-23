@@ -6,7 +6,7 @@ class UserTableSeeder extends Seeder
     public function run()
     {
 
-      factory(\App\User::class, 50)->create();
+      factory(App\User::class, 50)->create();
 
       $user1 = new App\User();
       $user1->email = 'emily@codeup.com';

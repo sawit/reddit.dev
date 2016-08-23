@@ -9,7 +9,7 @@
 				<th>Posted</th>
 				<th>Posted By</th>
 				<th>Actions</th>
-			
+
 			</tr>
 		</thead>
 		<tbody>
@@ -18,7 +18,7 @@
 					<td>{{ $post->title }}</td>
 					<td>{{ $post->url }}</td>
 					<td>{{ $post->content }}</td>
-					<td>{{ $post->created_at->setTimezone('America/Chicago')->format('F j, Y h:i A') }}</td>
+					<td>{{ $post->created_at }}</td>
 					<td>{{ $post->user->name }}</td>
 					<td><form method="POST" action="{{action('PostsController@destroy', $post->id) }}">
 						{!! method_field('DELETE') !!}
@@ -29,6 +29,6 @@
 			@endforeach
 		</tbody>
 	</table>
-			
+
 			{!! $posts->render() !!}
 @stop
