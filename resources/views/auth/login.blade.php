@@ -3,13 +3,13 @@
   <form method="post" action="{{ action('Auth\AuthController@postLogin') }}">
     {{ csrf_field() }}
     <div class= "form-group">
-        <label for="username">Username</label>
+        <label for="email">Email</label>
         <input
           type="text"
           class="form-control"
-          name="username"
-          id="username">
-          @include('forms.errors', ['field' => 'username'])
+          name="email"
+          id="email">
+          @include('forms.errors', ['field' => 'email'])
     </div>
     <div class= "form-group">
         <label for="password">Password</label>

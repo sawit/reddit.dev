@@ -8,6 +8,7 @@ use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -15,13 +16,13 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-     $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+
     }
 
-    public function index()
-    {
-        $posts = Post::paginate(5);
-        return view('posts.index')->with(array('posts' => $posts));
+    public function index() {
+        $posts = Post::with('user')->paginate(10);
+		    return view('posts.index')->with('posts', $posts);
     }
 
     public function create()
@@ -31,12 +32,11 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, Post::$rules);
         $post = new Post();
-        $post->$request->input('title');
-        $post->$request->input('url');
-        $post->$request->input('content');
-        $post->created_by->input('user');
-        Auth::user();
+        $post->created_by = Auth::user()->id;
+        Log::info($request->all());
+        // Auth::id;
         return $this->validateAndSave($post, $request);
     }
 
@@ -53,7 +53,13 @@ class PostsController extends Controller
 
     public function edit($id)
     {
-        return 'Hello Kings from the edit function!';
+      $post = Post::withTrashed()->where('id', $id)->first();
+      if (!$post) {
+            abort(404);
+      }
+      return view('posts.edit')->with('post', $post);
+
+      // view('posts.edit', ['post' => $post]);
     }
 
     public function update(Request $request, $id)
@@ -70,12 +76,11 @@ class PostsController extends Controller
         } else {
             $post->delete();
             session()->flash('message', 'Post deleted');
-
+            return redirect()->action('PostsController@index');
         }
-        return redirect()->action('PostsController@index');
 
     }
-    
+
     private function validateAndSave(Post $post, Request $request) {
         $request->session()->flash('ERROR_MESSAGE', 'Post not created');
         $this->validate($request, Post::$rules);
