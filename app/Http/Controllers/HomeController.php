@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -18,9 +20,9 @@ class HomeController extends Controller
         $number += 1;
         return view('increment')->with('number', $number);
     }
-    public function showWelcome($name = 'Emily') {
-        return view('welcome')->with('name', $name);
-
-        // redirect()->action('HomeController@uppercase', array('Emily'));
+    public function showWelcome() {
+      $posts = Post::with('user')->orderBy('created_by', 'desc')->take(10)->get();
+      return view('welcome')->with('posts', $posts);
     }
+
 }

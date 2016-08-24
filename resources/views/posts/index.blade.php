@@ -3,6 +3,7 @@
 	<table class="table table-bordered table-striped table-hover">
 		<thead>
 			<tr>
+				<th>Votes</th>
 				<th>Title</th>
 				<th>URL</th>
 				<th>Content</th>
@@ -15,16 +16,20 @@
 		<tbody>
 			@foreach($posts as $post)
 				<tr>
+					<td></td>
 					<td>{{ $post->title }}</td>
-					<td>{{ $post->url }}</td>
+					<td><a href="http://{{ $post->url }}" target="_Blank">{{ $post->url }}</a></td>
 					<td>{{ $post->content }}</td>
 					<td>{{ $post->created_at }}</td>
 					<td>{{ $post->user->name }}</td>
-					<td><form method="POST" action="{{action('PostsController@destroy', $post->id) }}">
+					<td><form method="POST" action="{{ action('PostsController@edit', $post->id) }}">
+						{!! method_field('EDIT') !!}
+						{!! csrf_field() !!}
+					<button type="submit" value="Edit" class="btn btn-primary">Edit</button></form>
+					<form method="POST" action="{{ action('PostsController@destroy', $post->id) }}">
 						{!! method_field('DELETE') !!}
 						{!! csrf_field() !!}
-						<button type="submit" value="Delete" class="btn btn-danger">Delete</button></form>
-						<button type="submit" value="Edit" class="btn btn-primary">Edit</td>
+						<button type="submit" value="Delete" class="btn btn-danger">Delete</button></form></td>
 				</tr>
 			@endforeach
 		</tbody>

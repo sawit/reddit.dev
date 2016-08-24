@@ -8,7 +8,7 @@
                     {!! csrf_field() !!}
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
-                    <input type="text" name="title" value="{{ old('title') }}" class="form-control" placeholder="Title" autofocus required>
+                    <input type="text" name="title"value="{{ old('title') }}" class="form-control" placeholder="Title" autofocus required>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
