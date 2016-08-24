@@ -16,6 +16,7 @@ Route::get('/', 'HomeController@showWelcome');
 Route::get('/uppercase/{word}', 'HomeController@uppercase');
 Route::get('/increment/{number}', 'HomeController@increment');
 Route::resource('posts', 'PostsController');
+Route::get('/posts/search', 'PostsController@search');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -25,3 +26,4 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::get('auth/account', 'PostsController@profile');

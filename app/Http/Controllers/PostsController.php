@@ -23,6 +23,9 @@ class PostsController extends Controller
     public function index() {
         $posts = Post::with('user')->paginate(10);
 		    return view('posts.index')->with('posts', $posts);
+    //     $posts = Post::sortPosts(10);
+		// return view('posts.index', ['posts' => $posts]);
+
     }
 
     public function create()
@@ -43,17 +46,18 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        return view('posts.show')->with('post', $post);
 
         if(!$post) {
             Log::info("Post with ID $id can't be found!");
             abort(404);
         }
+
+        return view('posts.show')->with('post', $post);
     }
 
     public function edit($id)
     {
-      $post = Post::withTrashed()->where('id', $id)->first();
+      $post = Post::with('posts')->where('id', $id)->first();
       if (!$post) {
             abort(404);
       }
@@ -80,6 +84,14 @@ class PostsController extends Controller
         }
 
     }
+    public function search(Post $post, Request $request)
+  	{
+  		$search = $request->input('search');
+  		if ($search) {
+  			$results = Post::searchPosts($search);
+  		}
+  		return view('posts.results', ['search' => $results]);
+  	}
 
     private function validateAndSave(Post $post, Request $request) {
         $request->session()->flash('ERROR_MESSAGE', 'Post not created');
@@ -87,7 +99,7 @@ class PostsController extends Controller
         $request->session()->forget('ERROR_MESSAGE');
 
         $post->title = $request->input('title');
-        $post->url = $request->url;
+        $post->url = $request->input('url');
         $post->content = $request->input('content');
         $post->save();
 

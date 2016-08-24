@@ -21,7 +21,8 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     protected $hidden = ['password', 'remember_token'];
 
     public function posts() {
-      return $this->hasMany(Post::class, 'created_by');
+      return $this->hasMany(Post::class);
+      // return $this->hasMany(Post::class, 'created_by');
     }
 
     public static function count($userId) {

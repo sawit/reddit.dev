@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('content')
 	<dl>
+		<!-- <dt>Votes</dt>
+		<dd>{{ $post->voteCount }}</dd> -->
 		<dt>Title</dt>
 		<dd>{{ $post->title }}</dd>
 		<dt>Url</dt>

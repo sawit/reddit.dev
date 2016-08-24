@@ -19,20 +19,30 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="">SawIt</a>
+        <a class="navbar-brand" href="/">SawIt</a>
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="/">Home</a></li>
           <li><a href="/posts">Posts</a></li>
-          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/auth/register">Sign Up</a></li>
+          <li><a href="/posts/create">Create Post</a></li>
           <li><a href="/auth/login">Login</a></li>
         </ul>
+
+        <form action="/search" class="navbar-form navbar-left">
+          <div class="form-group">
+            <input name="keyword" type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" id="search" class="btn btn-default">Search</button>
+        </form>
+
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your Account <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
             <ul class="dropdown-menu">
+              <li><a href="/account">Profile</a></li>
               <li><a href="/posts">View Posts</a></li>
               <li><a href="/posts/create">Create Post</a></li>
               <li role="separator" class="divider"></li>
@@ -40,6 +50,7 @@
             </ul>
           </li>
         </ul>
+
       </div>
     </div>
   </nav>

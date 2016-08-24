@@ -23,6 +23,7 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
     protected $redirectPath = '/posts';
+    protected $redirectAfterLogout = '/auth/login';
 
     public function __construct()
     {
