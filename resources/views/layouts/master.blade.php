@@ -19,19 +19,19 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">SawIt</a>
+        <a class="navbar-brand" href="{{ action('HomeController@showWelcome') }}">SawIt</a>
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="/posts">Posts</a></li>
+          <li class="active"><a href="{{ action('HomeController@showWelcome') }}">Home</a></li>
+          <li><a href="{{ action('PostsController@index') }}">Posts</a></li>
+          <li><a href="{{ action('PostsController@create') }}">Create Post</a></li>
           <li><a href="/auth/register">Sign Up</a></li>
-          <li><a href="/posts/create">Create Post</a></li>
-          <li><a href="/auth/login">Login</a></li>
+          <li><a href="{{ action('Auth\AuthController@getLogin') }}">Login</a></li>
         </ul>
 
-        <form action="/search" class="navbar-form navbar-left">
+        <form method="GET" action="{{ action('PostsController@index') }}" class="navbar-form navbar-left">
           <div class="form-group">
             <input name="keyword" type="text" class="form-control" placeholder="Search">
           </div>

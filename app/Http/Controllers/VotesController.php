@@ -9,6 +9,16 @@ use App\Http\Controllers\Controller;
 
 class VotesController extends Controller
 {
+  public function vote($vote=0) {
+        if ($vote) {
+          $vote += 1;
+          return view('votes')->with('vote', $vote);
+        } elseif () {
+          $vote -= 1;
+          return view('votes')->with('vote', $vote);
+        }
+  }
+
     /**
      * Display a listing of the resource.
      *

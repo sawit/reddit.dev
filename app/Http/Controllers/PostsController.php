@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Post;
+use App\Vote;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -20,11 +21,18 @@ class PostsController extends Controller
 
     }
 
-    public function index() {
-        $posts = Post::with('user')->paginate(10);
-		    return view('posts.index')->with('posts', $posts);
-    //     $posts = Post::sortPosts(10);
-		// return view('posts.index', ['posts' => $posts]);
+    public function index(Request $request) {
+      $searchQuery = $request->input('search');
+
+      if (!is_null($searchQuery)) {
+         $posts =  Posts::searchContentTitleOwner($searchQuery)->orderBy('created_at', 'ASC')->with('user')->paginate(10);
+      } else {
+        $posts = Post::with('user')->orderBy('created_at', 'ASC')->paginate(10);
+      }
+
+      $data = compact('searchTerm', 'posts');
+
+     return view('posts.index')->with($data);
 
     }
 
@@ -43,32 +51,28 @@ class PostsController extends Controller
         return $this->validateAndSave($post, $request);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $post = Post::find($id);
+      $post = Post::with('user')->findOrFail($id);
+       if ($request->user()) {
+           $user_vote = $post->userVote($request->user());
+       } else {
+           $user_vote = null;
+       }
 
-        if(!$post) {
-            Log::info("Post with ID $id can't be found!");
-            abort(404);
-        }
-
-        return view('posts.show')->with('post', $post);
+       $data = compact('post', 'user_vote');
+       return view('posts.show')->with($data);
     }
 
     public function edit($id)
     {
-      $post = Post::with('posts')->where('id', $id)->first();
-      if (!$post) {
-            abort(404);
-      }
-      return view('posts.edit')->with('post', $post);
-
-      // view('posts.edit', ['post' => $post]);
+        $post = Post::findOrFail($id);
+        return view('posts.edit')->with('post', $post);
     }
 
     public function update(Request $request, $id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         return $this->validateAndSave($post, $request);
     }
 
@@ -105,5 +109,16 @@ class PostsController extends Controller
 
         $request->session()->flash('SUCCESS_MESSAGE', 'Post created');
         return redirect()->action('PostsController@index');
+    }
+
+    public function addVote(Request $request) {
+        $vote = Vote::with('post')->firstOrCreate([
+            'post_id' => $request->input('post_id'),
+            'user_id' => $request->user()->id
+        ]);
+        $vote->vote->input('vote');
+        $vote->save();
+
+        $post = $vote->post;
     }
 }

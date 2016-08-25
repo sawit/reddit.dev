@@ -9,7 +9,6 @@
           class="form-control"
           name="email"
           id="email">
-          <!-- @include('forms.errors', ['field' => 'email']) -->
           @if ($errors->has('email'))
      				{!! $errors->first('email', '<span class="help-block bg-danger">:message</span>') !!}
  			    @endif
