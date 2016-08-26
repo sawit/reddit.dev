@@ -10,11 +10,12 @@
   		</a>
   		<div class="media-body">
     		<h4 class="media-heading">{{ $post->title }}</h4>
-          <p class="text-right">{{ $post->created_by }}</p>
+        <h5 class="media-heading">By: {{ $post->user->name }}</h5>
           <p>{{ $post->url }}</p>
           <p>{{ $post->content }}</p>
           <ul class="list-inline list-unstyled">
   			<li><span><i class="glyphicon glyphicon-calendar"></i> {{ $post->created_at }} </span></li>
+        <a href="{{ action('PostsController@show', $post->id) }}" class="btn btn-primary pull-right">View</a>
 			</ul>
        </div>
     </div>

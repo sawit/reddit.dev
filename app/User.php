@@ -22,10 +22,16 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
 
     public function posts() {
       return $this->hasMany(Post::class);
-      // return $this->hasMany(Post::class, 'created_by');
+    }
+    public function votes() {
+        return $this->hasMany('App\Vote','App\Post');
     }
 
     public static function count($userId) {
       return Post::where('created_by', $userId)->count();
     }
+    public static function searchByName($searchQuery)
+     {
+        return static::where('name', 'LIKE', "%{$searchQuery}%");
+     }
 }

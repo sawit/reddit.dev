@@ -19,6 +19,7 @@ class Post extends BaseModel
 				'content' => 'required|string',
 				'url' => 'required|active_url'
 		];
+
 	protected function formatValidationErrors(Validator $validator)
  	{
  		return $validator->errors()->all();
@@ -39,24 +40,35 @@ class Post extends BaseModel
  	{
  		return $this->belongsTo(User::class, 'created_by');
  	}
- 	public static function sortPosts($pageSize)
+ 	public static function sortPosts($searchQuery)
  	{
- 		return Post::orderBy('created_at', 'desc')->paginate($pageSize);
+ 		return Post::orderBy('created_at', 'desc')->paginate(10);
  	}
- 	public static function searchPosts($search)
+ 	public static function searchContentTitleOwner($searchQuery)
  	{
- 		return Post::where('content', 'LIKE', '%' . $search . '%')->with('user')->paginate(10);
+ 		return static::join('users', 'users.id', '=', 'posts.created_by')->where('posts.content', 'LIKE', "%{$searchQuery}%")->orWhere('posts.title', 'LIKE', "%{$searchQuery}%")->orWhere('users.name', 'LIKE', "%{$searchQuery}%")->select('*', 'posts.id as id')->paginate(10);
+	}
+	public function createdBy($user) {
+		return (!is_null($user)) ?  $this->created_by == $user->id : false;
 	}
 
-		// public function user()
-		// {
-		// 	return $this->belongsTo(User::class, 'created_by', 'id');
-		// }
-		// public static function count($userId)
-    // {
-    //     return Post::where('created_by', $userId)->count();
-    // }
-		// public static function search($name) {
-		// 	return self::join('users', 'posts.created_by', '=', 'users.id')->where('users.name', '=', $name);
-		// }
+	// public function votes() {
+	// 	return $this->hasMany(Vote::class);
+	// }
+	// public function upvotes() {
+	// 	return $this->votes()->where('vote', '=', 1);
+	// }
+	// public function downvotes() {
+	// 	return $this->votes()->where('vote', '=', 0);
+	// }
+	// public function voteScore() {
+	// 	$upvotes = $this->upvotes()->count();
+	// 	$downvotes = $this->downvotes()->count();
+	// 	return $upvotes - $downvotes;
+	// }
+	//
+	// public function userVote($user) {
+	// 		$this->votes()->where('user_id', '=', $user->id)->first();
+	// }
+
 }

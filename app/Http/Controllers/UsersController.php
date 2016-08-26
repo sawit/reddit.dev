@@ -3,22 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class VotesController extends Controller
+class UsersController extends Controller
 {
-  public function vote($vote=0) {
-        if ($vote) {
-          $vote += 1;
-          return view('votes')->with('vote', $vote);
-        } elseif () {
-          $vote -= 1;
-          return view('votes')->with('vote', $vote);
-        }
-  }
-
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +48,8 @@ class VotesController extends Controller
      */
     public function show($id)
     {
-        //
+      $user = User::with('posts')->findOrFail($id);
+      return view('users.show')->with('user', $user);
     }
 
     /**
