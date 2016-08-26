@@ -29,11 +29,8 @@
 							<button type="submit" value="show" class="btn btn-primary">View</button></form>
 
 							@if($post->createdBy(Auth::user()))
-							<form method="POST" action="{{ action('PostsController@edit', $post->id) }}">
-							{!! method_field('EDIT') !!}
-							{!! csrf_field() !!}
-							<button type="submit" value="edit" class="btn btn-info">Edit</button></form>
-
+							<a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-info">Edit</a>
+						
 							<form method="POST" action="{{ action('PostsController@destroy', $post->id) }}">
 							{!! method_field('DELETE') !!}
 							{!! csrf_field() !!}

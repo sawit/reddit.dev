@@ -13,13 +13,13 @@
 				<img src="/img/upvote.png" class="img-responsive center-block vote {{ (!is_null($user_vote) && $user_vote->vote) ? 'active' : '' }}" data-vote="1" data-post-id="{{ $post->id }}">
 			</div>
 			<div class="row">
-				<p class="vote-score text-center" id="vote-score">{{ $post->voteScore }}</p>
+				<p class="vote-score text-center" id="vote-score">{{ $post->voteScore() }}</p>
 			</div>
 			<div class="row">
 				<img src="/img/downvote.png" class="img-responsive center-block vote {{ (!is_null($user_vote) && !$user_vote->vote) ? 'active' : '' }}" data-vote="0" data-post-id="{{ $post->id }}">
 			</div>
 		</div>
-		@if($post->ownedBy(Auth::user()))
+		@if($post->createdBy(Auth::user()))
 			<div class="col-sm-12">
 				<a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-primary">Edit</a>
 				<a href="{{ action('PostsController@destroy', $post->id) }}" class="btn btn-danger post-delete-link">Delete</a>
