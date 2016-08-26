@@ -25,12 +25,12 @@ class PostsController extends Controller
       $searchQuery = $request->input('search');
 
       if (!is_null($searchQuery)) {
-         $posts =  Posts::searchContentTitleOwner($searchQuery)->orderBy('created_at', 'ASC')->with('user')->paginate(10);
+         $posts =  Posts::searchContentTitleOwner($searchQuery)->orderBy('created_at', 'DESC')->with('user')->paginate(5);
       } else {
-        $posts = Post::with('user')->orderBy('created_at', 'ASC')->paginate(10);
+        $posts = Post::with('user')->orderBy('created_at', 'DESC')->paginate(5);
       }
 
-      $data = compact('searchTerm', 'posts');
+      $data = compact('searchQuery', 'posts');
 
      return view('posts.index')->with($data);
 

@@ -12,11 +12,12 @@ use Illuminate\Http\Request;
 | and give it the controller to call when that URI is requested.
 |
 */
+
 Route::get('/', 'HomeController@showWelcome');
-Route::get('/uppercase/{word}', 'HomeController@uppercase');
-Route::get('/increment/{number}', 'HomeController@increment');
+
 Route::resource('posts', 'PostsController');
-Route::get('/posts/search', 'PostsController@search');
+Route::post('/posts/add-vote', 'PostsController@addVote');
+Route::get('/account/{id}', 'UsersController@show');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -26,4 +27,14 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
-Route::get('auth/account', 'PostsController@profile');
+
+ Route::get('/', 'HomeController@showWelcome');
+ Route::resource('posts', 'PostsController');
+ Route::get('/posts/search', 'PostsController@search');
+ Route::get('/posts/{id}/edit', 'PostsController@edit');
+// Route::get('/posts/{id}/update', 'PostsController@update');
+ Route::get('/account/{id}', 'UsersController@update');
+//
+
+
+// Route::get('auth/account', 'PostsController@profile');

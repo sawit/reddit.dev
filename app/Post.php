@@ -40,35 +40,35 @@ class Post extends BaseModel
  	{
  		return $this->belongsTo(User::class, 'created_by');
  	}
- 	public static function sortPosts($pageSize)
+ 	public static function sortPosts($searchQuery)
  	{
- 		return Post::orderBy('created_at', 'desc')->paginate($pageSize);
+ 		return Post::orderBy('created_at', 'desc')->paginate(10);
  	}
  	public static function searchContentTitleOwner($searchQuery)
  	{
- 		return static::join('users', 'users.id', '=', 'posts.created_by')->where('posts.content', 'LIKE', "%{$searchTerm}%")->orWhere('posts.title', 'LIKE', "%{$searchTerm}%")->orWhere('users.name', 'LIKE', "%{$searchTerm}%")->select('*', 'posts.id as id')->paginate(10);
+ 		return static::join('users', 'users.id', '=', 'posts.created_by')->where('posts.content', 'LIKE', "%{$searchQuery}%")->orWhere('posts.title', 'LIKE', "%{$searchQuery}%")->orWhere('users.name', 'LIKE', "%{$searchQuery}%")->select('*', 'posts.id as id')->paginate(10);
 	}
 	public function createdBy($user) {
 		return (!is_null($user)) ?  $this->created_by == $user->id : false;
 	}
 
-	public function votes() {
-		return $this->hasMany(Vote::class);
-	}
-	public function upvotes() {
-		return $this->votes()->where('vote', '=', 1);
-	}
-	public function downvotes() {
-		return $this->votes()->where('vote', '=', 0);
-	}
-	public function voteScore() {
-		$upvotes = $this->upvotes()->count();
-		$downvotes = $this->downvotes()->count();
-		return $upvotes - $downvotes;
-	}
-
-	public function userVote($user) {
-			$this->votes()->where('user_id', '=', $user->id)->first();
-	}
+	// public function votes() {
+	// 	return $this->hasMany(Vote::class);
+	// }
+	// public function upvotes() {
+	// 	return $this->votes()->where('vote', '=', 1);
+	// }
+	// public function downvotes() {
+	// 	return $this->votes()->where('vote', '=', 0);
+	// }
+	// public function voteScore() {
+	// 	$upvotes = $this->upvotes()->count();
+	// 	$downvotes = $this->downvotes()->count();
+	// 	return $upvotes - $downvotes;
+	// }
+	//
+	// public function userVote($user) {
+	// 		$this->votes()->where('user_id', '=', $user->id)->first();
+	// }
 
 }

@@ -27,13 +27,14 @@
           <li class="active"><a href="{{ action('HomeController@showWelcome') }}">Home</a></li>
           <li><a href="{{ action('PostsController@index') }}">Posts</a></li>
           <li><a href="{{ action('PostsController@create') }}">Create Post</a></li>
-          <li><a href="/auth/register">Sign Up</a></li>
+          <li><a href="Route::post('auth/register', 'Auth\AuthController@postRegister')">Sign Up</a></li>
           <li><a href="{{ action('Auth\AuthController@getLogin') }}">Login</a></li>
         </ul>
 
         <form method="GET" action="{{ action('PostsController@index') }}" class="navbar-form navbar-left">
           <div class="form-group">
-            <input name="keyword" type="text" class="form-control" placeholder="Search">
+            <input name="keyword" type="text" class="form-control" placeholder="Search"
+            value="{{ isset($searchQuery) ? $searchQuery : '' }}">
           </div>
           <button type="submit" id="search" class="btn btn-default">Search</button>
         </form>
@@ -42,11 +43,11 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="/account">Profile</a></li>
-              <li><a href="/posts">View Posts</a></li>
-              <li><a href="/posts/create">Create Post</a></li>
+              <li><a href="Route::get('auth/register', 'Auth\AuthController@getRegister')">Profile</a></li>
+              <li><a href="{{ action('PostsController@index') }}"> Posts</a></li>
+              <li><a href="{{ action('PostsController@create') }}">Create Post</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="/auth/logout" action="Auth\AuthController@getLogout">Logout</a></li>
+              <li><a href="Route::get('auth/logout', 'Auth\AuthController@getLogout')">Logout</a></li>
             </ul>
           </li>
         </ul>

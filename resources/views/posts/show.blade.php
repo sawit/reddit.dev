@@ -21,12 +21,14 @@
 		</div>
 		@if($post->ownedBy(Auth::user()))
 			<div class="col-sm-12">
-				<a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-primary">Edit <i class="fa fa-pencil"></i></a>
-				<a href="{{ action('PostsController@destroy', $post->id) }}" class="btn btn-danger post-delete-link">Delete <i class="fa fa-trash"></i></a>
+				<a href="{{ action('PostsController@edit', $post->id) }}" class="btn btn-primary">Edit</a>
+				<a href="{{ action('PostsController@destroy', $post->id) }}" class="btn btn-danger post-delete-link">Delete</a>
 			</div>
 			<form method="POST" id="post-delete-form">
 				{{ method_field('DELETE') }}
 				{{ csrf_field() }}
+			</form>
+			<form method="POST" id="post-edit-form">
 			</form>
 		@endif
 		<input type="hidden" id="vote-url" value="{{ action('PostsController@addVote') }}">
@@ -37,6 +39,5 @@
 @stop
 
 @section('bottom-scripts')
-	<script src="/js/delete-post.js"></script>
 	<script src="/js/votes.js"></script>
 @stop

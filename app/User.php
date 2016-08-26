@@ -30,8 +30,8 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     public static function count($userId) {
       return Post::where('created_by', $userId)->count();
     }
-    public static function searchByName($searchTerm)
+    public static function searchByName($searchQuery)
      {
-        return static::where('name', 'LIKE', "%{$searchTerm}%");
+        return static::where('name', 'LIKE', "%{$searchQuery}%");
      }
 }
