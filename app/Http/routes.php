@@ -17,7 +17,7 @@ Route::get('/', 'HomeController@showWelcome');
 
 Route::resource('posts', 'PostsController');
 Route::post('/posts/add-vote', 'PostsController@addVote');
-Route::get('/account/{id}', 'UsersController@show');
+Route::get('/profile/{id}', 'UsersController@show');
 Route::get('/post/{id}/show', 'PostsController@show');
 
 // Authentication routes...
@@ -34,7 +34,7 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
  Route::get('/posts/search', 'PostsController@search');
  Route::get('/posts/{id}/edit', 'PostsController@edit');
 // Route::get('/posts/{id}/update', 'PostsController@update');
- Route::get('/account/{id}', 'UsersController@update');
+ Route::get('/profile/{id}', 'UsersController@update');
 //
 
 

@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <title>Reddit</title>
+<link rel="stylesheet" src="/public/SawIt.css">
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
 </head>
 <body>
   <nav class="navbar navbar-default">
@@ -27,7 +29,7 @@
           <li class="active"><a href="{{ action('HomeController@showWelcome') }}">Home</a></li>
           <li><a href="{{ action('PostsController@index') }}">Posts</a></li>
           <li><a href="{{ action('PostsController@create') }}">Create Post</a></li>
-          <li><a href="Route::post('auth/register', 'Auth\AuthController@postRegister')">Sign Up</a></li>
+          <li><a href="{{ action('Auth\AuthController@postRegister') }}">Sign Up</a></li>
           <li><a href="{{ action('Auth\AuthController@getLogin') }}">Login</a></li>
         </ul>
 
@@ -47,7 +49,7 @@
               <li><a href="{{ action('PostsController@index') }}"> Posts</a></li>
               <li><a href="{{ action('PostsController@create') }}">Create Post</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="Route::get('auth/logout', 'Auth\AuthController@getLogout')">Logout</a></li>
+              <li><a href="{{ action('Auth\AuthController@getLogout') }}">Logout</a></li>
             </ul>
           </li>
         </ul>
