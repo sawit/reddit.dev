@@ -18,6 +18,7 @@ Route::get('/', 'HomeController@showWelcome');
 Route::resource('posts', 'PostsController');
 Route::post('/posts/add-vote', 'PostsController@addVote');
 Route::get('/account/{id}', 'UsersController@show');
+Route::get('/post/{id}/show', 'PostsController@show');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

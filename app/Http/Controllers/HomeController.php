@@ -21,7 +21,7 @@ class HomeController extends Controller
         return view('increment')->with('number', $number);
     }
     public function showWelcome() {
-      $posts = Post::with('user')->orderBy('created_by', 'desc')->take(10)->get();
+      $posts = Post::with('user')->orderBy('created_at', 'DESC')->take(10)->get();
       return view('welcome')->with('posts', $posts);
     }
 
